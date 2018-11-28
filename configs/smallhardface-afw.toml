@@ -1,0 +1,7 @@
+[MODEL.DIFFERENT_DILATION]
+ENABLE = true
+
+[TEST]
+DB = "afw_val"
+SCALES = [50,100,200,400,600]
+FLIP = true

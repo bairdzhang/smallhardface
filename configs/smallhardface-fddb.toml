@@ -1,0 +1,6 @@
+[MODEL.DIFFERENT_DILATION]
+ENABLE = true
+
+[TEST]
+DB = "fddb_val"
+SCALES = [50, 190, 390]

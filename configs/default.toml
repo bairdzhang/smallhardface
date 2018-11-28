@@ -1,0 +1,137 @@
+DATA_DIR = "/mnt/WIDER_FACE"
+EPS = 1e-14
+EXP_DIR = "face"
+MAX_RESOLUTION = 16
+NAME = "face"
+PIXEL_MEANS = [[[102.9801, 115.9465, 122.7717]]]
+RNG_SEED = 3
+USE_GPU_NMS = true
+DEBUG = false
+# when it is on, we will force single GPU training
+# without forked worker to make pdb debugging smooth
+PDB = false
+
+[MISC]
+MIMIC_EVAL_BUG = true
+ACCURACY_THRESHOLD = 0.9
+
+[TENSORBOARD]
+ENABLE = false
+HOSTNAME = "example.com"
+PORT = 8889
+
+[MODEL]
+DIAGNOSE = ""
+
+[MODEL.DIFFERENT_DILATION]
+ENABLE = false
+
+[MODEL.HACK]
+TRAIN = ""
+TEST = ""
+
+[TRAIN]
+ANCHOR_MIN_SIZE = 4
+ANCHOR_N_POST_NMS = 300
+ANCHOR_N_PRE_NMS = 1000
+ANCHOR_NEGATIVE_OVERLAP = 0.3
+ANCHOR_POSITIVE_OVERLAP = 0.5
+# if it is greater than or equal to 0
+# we do not do mining for regression at all
+# we just select all anchors with larger overlap
+# for regression loss
+ANCHOR_REGRESSION_OVERLAP = 0.3
+ASPECT_GROUPING = true
+BBOX_INSIDE_WEIGHTS = [1, 1, 1, 1]
+BG_THRESH_HI = 0.5
+BG_THRESH_LOW = 0
+DB = "wider_train"
+IMS_PER_BATCH = 1
+ITERS = 60000
+ITERSIZE = 2
+LR_POLICY = "STEP" # "STEP" or "MULTISTEP"
+ORIG_SIZE = false
+POSITIVE_MINING = true
+PRETRAINED = "/mnt/WIDER_FACE/imagenet_models/VGG16.caffemodel"
+PROTOTXT = "models/train_template.prototxt"
+SNAPSHOT = 1000
+SNAPSHOT_INFIX = ""
+SOLVER = "models/solver_template.prototxt"
+STEPSIZE = 46000
+STEPVALUE = [21000, 42000]
+WEIGHT_DECAY = 0.00025
+USE_FLIPPED = true
+GPU_ID = [0, 1, 2, 3]
+
+[TRAIN.LR]
+BASELR = 0.004
+BACKBONE_MULT = 2.0
+HEAD_MULT = 1.0
+
+[TRAIN.SCALES]
+# SHORT_SIDE: Resize the short side of the image to the target value
+# FACE_AREA: Resize the median of face areas to the target value
+MODE = "SHORT_SIDE"
+SHORT_SIDE = [400, 800, 1200]
+MAX_SIZE = 2000
+
+[TRAIN.AUGMENT]
+ENABLE = true
+[TRAIN.AUGMENT.BRIGHTNESS]
+PROB = 0.5
+DELTA = 32.0
+[TRAIN.AUGMENT.CONTRAST]
+PROB = 0.5
+LOWER = 0.5
+UPPER = 1.5
+[TRAIN.AUGMENT.SATURATION]
+PROB = 0.5
+LOWER = 0.5
+UPPER = 1.5
+[TRAIN.AUGMENT.HUE]
+PROB = 0.5
+DELTA = 18.0
+[TRAIN.AUGMENT.CROP]
+PROB = 0.5
+LOWER = 0.6
+UPPER = 1.0
+POSITIVE_ENFORCE = true
+MAX_TRIES = 50
+KEEP_ONLY_CENTER_INSIDE = true
+
+[TRAIN.DISABLE_EASY_IMAGE]
+ENABLE = false
+THRESHOLD = 1.0
+PROB = 0.5
+# smooth version means:
+# instead of removing the image permanently with PROB, we
+# sample the image with PROB (in roidb layer)
+SMOOTH = false
+
+[TRAIN.ANCHOR_SAMPLING]
+ANCHORS_PER_BATCH = 256
+ANCHOR_FG_FRACTION = 0.25
+ANCHOR_NUM_METHOD = "fixed_num"
+BATCH_POS_NEG_RATIO = 0.33
+
+[TEST]
+ANCHOR_MIN_SIZE = 0
+ANCHOR_N_POST_NMS = -1
+DB = "wider_val"
+FLIP = true # also eval on horizontally flipped image
+LEVEL = []
+MAX_SIZE = 2000
+MODEL = ""
+NO_CACHE = false
+NMS_THRESH = 0.4
+# NMS_METHOD: "NMS" -> traditional NMS
+#             "BBOX_VOTE" -> bbox_vote from pyramidbox
+NMS_METHOD = "BBOX_VOTE"
+N_DETS_PER_MODULE = 10000
+ORIG_SIZE = false
+PYRAMID_BASE_SIZE = [800, 1200]
+PROTOTXT = "models/test_template.prototxt"
+SCALES = [100, 300, 600, 1000, 1400]
+SCORE_THRESH = 0.002
+GPU_ID = [0,1,2,3]
+IOU_THRESH = 0.5

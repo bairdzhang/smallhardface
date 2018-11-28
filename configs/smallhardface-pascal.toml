@@ -1,0 +1,7 @@
+[MODEL.DIFFERENT_DILATION]
+ENABLE = true
+
+[TEST]
+DB = "pascalface_val"
+SCALES = [100,300]
+FLIP = false

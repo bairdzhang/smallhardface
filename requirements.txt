@@ -1,0 +1,13 @@
+opencv-python
+Cython
+matplotlib==2.2.3
+numpy
+scipy
+pyyaml
+EasyDict
+protobuf
+argparse
+scikit-image
+toml
+pydot
+requests
