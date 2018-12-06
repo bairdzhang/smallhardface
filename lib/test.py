@@ -267,12 +267,36 @@ def inference_worker(rank,
     return dets
 
 
+def demo(target_test, thresh):
+    # Loading the network
+    cfg.GPU_ID = cfg.TEST.GPU_ID[0]
+    caffe.set_mode_gpu()
+    caffe.set_device(cfg.GPU_ID)
+    net = caffe.Net(str(target_test), str(cfg.TEST.MODEL), caffe.TEST)
+    pyramid = True if len(cfg.TEST.SCALES) > 1 else False
+    im_path = cfg.TEST.DEMO.IMAGE
+    dets, detect_time = detect(
+        net, im_path, thresh, timers=None, pyramid=pyramid)
+    im = cv2.imread(cfg.TEST.DEMO.IMAGE)
+    for i in range(dets[0].shape[0]):
+        if dets[0][i, -1] < thresh:
+            continue
+        cv2.rectangle(im, (int(dets[0][i, 0]), int(dets[0][i, 1])),
+                      (int(dets[0][i, 2]), int(dets[0][i, 3])), (0, 255, 0), 2)
+    cv2.imwrite('/tmp/demo_res.jpg', im)
+    return None
+
+
 def test_net(imdb,
              output_dir,
              target_test,
              thresh=0.05,
              no_cache=False,
              step=0):
+    # Run demo
+    if imdb is None:
+        assert cfg.TEST.DEMO.ENABLE, "check your config and stderr!"
+        return demo(target_test, thresh)
     # Initializing the timers
     logger.info('Evaluating {} on {}'.format(cfg.NAME, imdb.name))
 

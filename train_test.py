@@ -112,8 +112,12 @@ if __name__ == '__main__':
         if isinstance(cfg.TEST.GPU_ID, int):
             cfg.TEST.GPU_ID = [cfg.TEST.GPU_ID]
 
-        imdb = get_imdb(cfg.TEST.DB)
-        output_dir = get_output_dir(imdb.name, cfg.NAME + '_' + cfg.LOG.TIME)
+        if not cfg.TEST.DEMO.ENABLE:
+            imdb = get_imdb(cfg.TEST.DB)
+            output_dir = get_output_dir(imdb.name, cfg.NAME + '_' + cfg.LOG.TIME)
+        else:
+            imdb = None
+            output_dir = get_output_dir("demo", cfg.NAME + '_' + cfg.LOG.TIME)
 
         f = open(osp.join(output_dir, 'stderr.log'), 'w', 0)
         os.dup2(f.fileno(), sys.stderr.fileno())

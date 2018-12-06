@@ -124,3 +124,4 @@ submit.sh
 *.eps
 *.jpg
 *.png
+!demo/demo.jpg

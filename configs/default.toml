@@ -135,3 +135,7 @@ SCALES = [100, 300, 600, 1000, 1400]
 SCORE_THRESH = 0.002
 GPU_ID = [0,1,2,3]
 IOU_THRESH = 0.5
+
+[TEST.DEMO]
+ENABLE = false
+IMAGE = "demo/demo.jpg"
