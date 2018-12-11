@@ -118,7 +118,7 @@ def _simple_conv_layer(name,
     conv_layer.convolution_param.bias_filler.value = bias
     conv_layer.convolution_param.dilation.append(dilation)
     conv_layer.ClearField('param')
-    conv_layer.param.MergeFrom([caffe_pb2.ParamSpec()] * 2)
+    conv_layer.param.extend([caffe_pb2.ParamSpec()] * 2)
     if param_type == 1:
         conv_layer.param[0].lr_mult = 1.0
         conv_layer.param[0].decay_mult = 0.0
@@ -184,5 +184,5 @@ def _add_dimension_reduction(pb):
         _simple_relu_layer('conv4_fuse_final_dim_red_relu', 'conv4_fuse_final')
     ] + pb.layer[split:]
     pb.ClearField('layer')
-    pb.layer.MergeFrom(new_layers)
+    pb.layer.extend(new_layers)
     return pb
