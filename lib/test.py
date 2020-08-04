@@ -226,8 +226,7 @@ def inference_worker(rank,
                      result_queue=None):
     # Loading the network
     cfg.GPU_ID = cfg.TEST.GPU_ID[rank]
-    caffe.set_mode_gpu()
-    caffe.set_device(cfg.GPU_ID)
+    caffe.set_mode_cpu()
     net = caffe.Net(str(target_test), str(cfg.TEST.MODEL), caffe.TEST)
 
     timers = {'detect': Timer(), 'misc': Timer()}
@@ -270,8 +269,7 @@ def inference_worker(rank,
 def demo(target_test, thresh):
     # Loading the network
     cfg.GPU_ID = cfg.TEST.GPU_ID[0]
-    caffe.set_mode_gpu()
-    caffe.set_device(cfg.GPU_ID)
+    caffe.set_mode_cpu()
     net = caffe.Net(str(target_test), str(cfg.TEST.MODEL), caffe.TEST)
     pyramid = True if len(cfg.TEST.SCALES) > 1 else False
     im_path = cfg.TEST.DEMO.IMAGE
